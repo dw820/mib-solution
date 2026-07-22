@@ -1,0 +1,12 @@
+# Offline runtime deps. All install at BUILD time; nothing is fetched at run time
+# (RapidOCR's PP-OCR ONNX models and pypdfium2's PDFium are bundled in the wheels).
+# Versions pinned to what the model artifact (clf_final_model.joblib) was trained
+# with, so unpickling is exact.
+
+numpy==2.3.5
+scipy==1.18.0
+scikit-learn==1.9.0          # MUST match: the classifier was pickled with 1.9.0
+joblib==1.5.3
+pypdfium2==5.12.1            # PDF -> page image (bundles PDFium; no system deps)
+rapidocr-onnxruntime==1.4.4  # PP-OCR detection+recognition via ONNX, CPU, offline
+onnxruntime==1.27.0          # pinned so the CPU execution provider matches validation

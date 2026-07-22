@@ -1,0 +1,55 @@
+{
+ "declared_purpose": [
+  "reactor maintenance",
+  "field repair",
+  "medical consult",
+  "translation",
+  "research",
+  "diplomatic",
+  "cultural exchange",
+  "xenobotany",
+  "archive audit",
+  "transit"
+ ],
+ "fee_status": [
+  "paid",
+  "waived",
+  "unpaid"
+ ],
+ "home_world": [
+  "Europa Station",
+  "Luyten-b",
+  "Titan Freeport",
+  "Barnard-c",
+  "Kepler-186f",
+  "Gliese-581g",
+  "Mars Dome-7",
+  "Wolf-1061c",
+  "Proxima-b",
+  "Sirius Outpost",
+  "Zeta Reticuli",
+  "TRAPPIST-1e",
+  "Eris Relay"
+ ],
+ "species_code": [
+  "TRIANGULAN",
+  "ORION_GRAYS",
+  "LUNA_SECURID",
+  "ALPHA_DRACONIAN",
+  "VENUSIAN_MYCELIAL",
+  "CENTAURI_SYNTH",
+  "JOVIAN_GASFORM",
+  "KAIJU_MICRO",
+  "SIRIUS_AVIAN",
+  "ARCTURIAN",
+  "ANDROMEDAN",
+  "AQUARIAN_MANTIS"
+ ],
+ "visa_class": [
+  "MED-3",
+  "DIP-1",
+  "XW-1",
+  "XW-2",
+  "TRANSIT-7"
+ ]
+}
