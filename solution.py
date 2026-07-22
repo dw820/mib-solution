@@ -17,12 +17,24 @@ Runtime discipline (matches the read-only scoring container):
   - debug artifacts are written next to the output ONLY when MIB_DEBUG is set
 """
 import csv
+import datetime
 import json
 import multiprocessing as mp
 import os
 import sys
 import time
 from pathlib import Path
+
+
+def _safe_date(v):
+    """Guarantee a schema-valid `arrival_date`. Any non-calendar value (e.g. an
+    OCR misread like 2026-06-31) falls back to the missing-date placeholder, so
+    validate_submission.py never hard-fails on the whole submission."""
+    try:
+        datetime.date.fromisoformat(str(v))
+        return v
+    except (ValueError, TypeError):
+        return "1900-01-01"
 
 _HERE = Path(__file__).resolve().parent
 
@@ -65,6 +77,7 @@ def _run_one(pdf_str: str) -> dict:
         adjudication, confidence = _STATE["clf"].predict_one(rec, fields, feats)
         row = {"case_id": pdf.stem, **{k: fields.get(k) for k in CONTENT_FIELDS},
                "adjudication": adjudication, "confidence": round(float(confidence), 4)}
+        row["arrival_date"] = _safe_date(row.get("arrival_date"))   # never emit an invalid date
         pages = len(rec.get("pages", []))
     except Exception as exc:  # noqa: BLE001 - never let one bad PDF kill the run
         print(f"[warn] skipping {pdf.name}: {exc}", file=sys.stderr)

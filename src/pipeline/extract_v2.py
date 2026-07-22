@@ -86,6 +86,7 @@ vocabulary, not data-derived from labels.
 """
 from __future__ import annotations
 
+import datetime
 import difflib
 import os
 import re
@@ -480,9 +481,16 @@ def norm_date(v: str):
     if not (y.isdigit() and mo.isdigit() and d.isdigit()):
         return None
     yi, mi, di = int(y), int(mo), int(d)
-    if not (1900 <= yi <= 2200 and 1 <= mi <= 12 and 1 <= di <= 31):
+    if not 1900 <= yi <= 2200:
         return None
-    return f"{yi:04d}-{mi:02d}-{di:02d}"
+    # Real calendar validation: a range check on the day accepts impossible dates
+    # like 2026-06-31 (June has 30 days) or 2026-02-30, which the schema's date
+    # format rejects and validate_submission.py hard-fails on. datetime.date only
+    # constructs a genuine calendar date.
+    try:
+        return datetime.date(yi, mi, di).isoformat()
+    except ValueError:
+        return None
 
 
 def norm_fee(v: str):
